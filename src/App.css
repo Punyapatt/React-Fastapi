@@ -1,0 +1,35 @@
+* {
+  margin: 10;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+th {
+  width: 10%;
+}
+
+.MuiTableBody-root .MuiTableRow-root:hover {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  cursor: pointer;
+}
+
+.MuiMenu-root .MuiMenu-paper {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+
+/* .MuiTableCell-root div .MuiPopover-root .MuiTypography-root {
+  box-shadow: rgba(84, 255, 16, 0.24) 0px 3px 8px;
+}  */
+
+h1 {
+  color: brown;
+}
+
+/* .MuiAutocomplete-root .MuiTextField-root { */
+/* .MuiTextField-root {  
+  font-size: 10px;
+  border: 1px solid;
+  width: 300px;
+  height: 30px;
+} */
