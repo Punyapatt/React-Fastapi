@@ -26,23 +26,19 @@ import FormControl from '@mui/material/FormControl';
 
 
 
-
-
 export default function SimpleTable() {
   const [policy, setUsers] = useState([])
   const headers = ["id", "Name", "From", "To", "Source", "Destination", "Service", "Action"]
   const listItems = headers.map((tcell, index) =>
     <TableCell key={index} align="center">{tcell}</TableCell>
   );
-
-
-  
+  const host = process.env.HOST_IP
+  const port = process.env.PORT
   const location = useLocation();
   const path = location.state;
   const [anchorEl, setAnchorEl] = React.useState(null);
   const options = ['root', 'LoadBalance'];
-  const [value, setValue] = React.useState(path ? path?.path : 'root');
-  const [inputValue, setInputValue] = React.useState(path ? path?.path : 'root');
+  const [value, setValue] = React.useState(path && path.path ? path.path : 'root');
   const [Addr, setAddr] = React.useState('');
   const [nameAddr, setnameAddr] = React.useState('');
   const [contextMenu, setContextMenu] = React.useState(null);
@@ -53,10 +49,7 @@ export default function SimpleTable() {
     horizontal: 'center'
   });
   const { vertical, horizontal } = state;
-  
   const navigate = useNavigate();
-
-  const [testval, setTestval] = React.useState('');
 
   const popoverHoverFocus = (
     <Popover id="popover-basic">
@@ -125,11 +118,12 @@ export default function SimpleTable() {
         dstaddr:erow.dstaddr,
         service:erow.service,
         action:erow.action,
-        path:inputValue}})
+        path:value}})
   };
 
   const fetchData = () => {
-    fetch(`http://127.0.0.1:8000/policy/${inputValue}`)
+    // fetch(`http://127.0.0.1:8000/policy/${value}`)
+    fetch(`http://${host}:${port}/policy/${value}`)
       .then(response => {
         return response.json()
       })
@@ -145,7 +139,7 @@ export default function SimpleTable() {
       addr = addr.replace('/', '--')
       // console.log(addr)
     }
-    fetch(`http://127.0.0.1:8000/address/${encodeURI(addr)}`)
+    fetch(`http://${host}:${port}/address/${encodeURI(addr)}`)
     .then(response => {
       return response.json()
     })
@@ -157,9 +151,11 @@ export default function SimpleTable() {
 
   useEffect(() => {
     fetchData()
-  }, [inputValue])
+  }, [value])
 
-
+  // console.log("Value:", value)
+  console.log(host)
+  console.log(port)
 
   return (
     <>
@@ -194,7 +190,9 @@ export default function SimpleTable() {
           value={value}
           label="Zone"
           onChange={(event, newValue) => {
+            // setInputValue(event.target.value)
             setValue(event.target.value);
+            console.log(event.target.value)
             // setTestval(event.target.value)
           }}
         >
@@ -264,7 +262,7 @@ export default function SimpleTable() {
                     dstaddr:row.dstaddr,
                     service:row.service,
                     action:row.action,
-                    path:inputValue}})
+                    path:value}})
               }}
             >
               <TableCell align="center">{row.id}</TableCell>
@@ -277,7 +275,7 @@ export default function SimpleTable() {
                 <div 
                   key={index} 
                   onMouseEnter={handlePopoverOpen}
-                  onMouseLeave={handlePopoverClose}
+                  // onMouseLeave={handlePopoverClose}
                 >
                   <OverlayTrigger
                     key={index}

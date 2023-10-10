@@ -131,7 +131,7 @@ function AddressForm() {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
             setOpen(false)
-            // navigate('/policy', {state:{open:true, path: path && path.path}})
+            navigate('/policy', {state:{open:true, path: path && path.path}})
         })
         .catch(error => console.log('error', error));
   }
