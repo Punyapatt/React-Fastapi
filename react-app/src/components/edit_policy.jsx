@@ -34,7 +34,8 @@ function AddressForm() {
   const [open, setOpen] = React.useState(false);
   const pid = path && path.id ? path.id : 0;
   const neighbor = path && path.neighbor ? path.neighbor : '';
-
+  const host = process.env.HOST_IP
+  const port = process.env.PORT
   
   const updateState = (val, name, new_ip=null) => {
     if (name == 'srcaddr') {
@@ -60,7 +61,7 @@ function AddressForm() {
 
 
   const fetchData = () => {
-    fetch("http://127.0.0.1:8000/interfaces")
+    fetch("http://${host}:${port}/interfaces")
       .then(response => {
         return response.json()
       })
@@ -70,7 +71,7 @@ function AddressForm() {
   }
 
   const fetchAddrAll = () => {
-    fetch("http://127.0.0.1:8000/address")
+    fetch("http://${host}:${port}/address")
     .then(response => {
       return response.json()
     })
@@ -80,7 +81,7 @@ function AddressForm() {
   }
 
   const fetchService = () => {
-    fetch("http://127.0.0.1:8000/service")
+    fetch("http://${host}:${port}/service")
     .then(response => {
       return response.json()
     })
@@ -93,7 +94,7 @@ function AddressForm() {
     console.log(clone ? "create" : "update")
     console.log(pid)
     setOpen(true)
-    fetch(`http://127.0.0.1:8000/${clone ? "create" : "update"}/${parseInt(pid)}`, {
+    fetch(`http://${host}:${port}/${clone ? "create" : "update"}/${parseInt(pid)}`, {
         method: 'POST',
         body: JSON.stringify({
           "name": name,

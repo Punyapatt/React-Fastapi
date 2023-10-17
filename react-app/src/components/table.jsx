@@ -34,6 +34,7 @@ export default function SimpleTable() {
   );
   const host = process.env.HOST_IP
   const port = process.env.PORT
+
   const location = useLocation();
   const path = location.state;
   const [anchorEl, setAnchorEl] = React.useState(null);
