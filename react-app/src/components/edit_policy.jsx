@@ -61,7 +61,7 @@ function AddressForm() {
 
 
   const fetchData = () => {
-    fetch("http://${host}:${port}/interfaces")
+    fetch(`http://${host}:${port}/interfaces`)
       .then(response => {
         return response.json()
       })
@@ -71,7 +71,7 @@ function AddressForm() {
   }
 
   const fetchAddrAll = () => {
-    fetch("http://${host}:${port}/address")
+    fetch(`http://${host}:${port}/address`)
     .then(response => {
       return response.json()
     })
@@ -81,7 +81,7 @@ function AddressForm() {
   }
 
   const fetchService = () => {
-    fetch("http://${host}:${port}/service")
+    fetch(`http://${host}:${port}/service`)
     .then(response => {
       return response.json()
     })
