@@ -34,7 +34,6 @@ export default function SimpleTable() {
   );
   const host = process.env.HOST_IP
   const port = process.env.PORT
-
   const location = useLocation();
   const path = location.state;
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -123,8 +122,8 @@ export default function SimpleTable() {
   };
 
   const fetchData = () => {
-    // fetch(`http://127.0.0.1:8000/policy/${value}`)
-    fetch(`http://${host}:${port}/policy/${value}`)
+    // fetch(`http://${host}:${port}/policy/${value}`)
+    fetch(`api/policy/${value}`)
       .then(response => {
         return response.json()
       })
@@ -140,7 +139,8 @@ export default function SimpleTable() {
       addr = addr.replace('/', '--')
       // console.log(addr)
     }
-    fetch(`http://${host}:${port}/address/${encodeURI(addr)}`)
+    // fetch(`http://${host}:${port}/address/${encodeURI(addr)}`)
+    fetch(`api/address/${encodeURI(addr)}`)
     .then(response => {
       return response.json()
     })
@@ -155,8 +155,8 @@ export default function SimpleTable() {
   }, [value])
 
   // console.log("Value:", value)
-  console.log(host)
-  console.log(port)
+  // console.log(host)
+  // console.log(port)
 
   return (
     <>

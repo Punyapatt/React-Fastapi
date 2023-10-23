@@ -25,8 +25,6 @@ export default function MultiSelected({setval, name, inf, val, error }) {
   const [regex, setRegex] = useState(true)
   const [all, setAll] = useState(false)
   const [load, setLoad] = useState(false)
-  const host = process.env.HOST_IP
-  const port = process.env.PORT
   
 
 
@@ -53,7 +51,8 @@ export default function MultiSelected({setval, name, inf, val, error }) {
       addr = addr.replace('/', '--')
       // console.log(addr)
     }
-    fetch(`http://${host}:${port}/address/${encodeURI(addr)}`)
+    // fetch(`http://127.0.0.1:8000/address/${encodeURI(addr)}`)
+    fetch(`api/address/${encodeURI(addr)}`)
     .then(response => {
       return response.json()
     })
@@ -71,7 +70,8 @@ export default function MultiSelected({setval, name, inf, val, error }) {
 
   const createAddr = () => {
     setLoad(true)
-    fetch(`http://${host}:${port}/address`, {
+    // fetch(`http://127.0.0.1:8000/address`, {
+    fetch(`api/address`, {
       method: 'POST',
       body: JSON.stringify({
         "name":`${ip}/${subnet}`,

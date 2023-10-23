@@ -15,7 +15,7 @@ app = FastAPI()
 host = secret.get("host")
 user = secret.get("username")
 password = secret.get("password")
-fgt = FortigateAPI(host = host, username=user, password=password)
+fgt = FortigateAPI(host = host, username=user, password=password, timeout=1)
 
 
 origins = ["*"]
@@ -68,12 +68,13 @@ def short_loop(data):
 
 @app.get("/")
 async def read_root():
+    print('------ / --------')
     all_pol = fgt.policy.get()
     # print(all_pol)
     return json.dumps(all_pol, indent=2)
     
 
-@app.get("/interfaces")
+@app.get("/api/interfaces")
 async def get_interface():
     inf = []
     interfaces = fgt.interface.get()
@@ -82,7 +83,7 @@ async def get_interface():
         inf.append(val['name'])
     return inf
 
-@app.get("/address/{addr}")
+@app.get("/api/address/{addr}")
 async def get_address(addr: str):
     lists = []
     # print(addr)
@@ -112,7 +113,7 @@ async def get_address(addr: str):
                 lists.append(i.get("name"))
     return lists
 
-@app.post("/address")
+@app.post("/api/address")
 async def craete_address(addr: Addr):
     time.sleep(2)
     print(addr)
@@ -127,7 +128,7 @@ async def craete_address(addr: Addr):
     print(res)
     return addr
 
-@app.get("/address")
+@app.get("/api/address")
 async def get_address():
     lists = []
     addr_all = fgt.address.get()
@@ -136,7 +137,7 @@ async def get_address():
     # print(lists)
     return lists
 
-@app.get("/service")
+@app.get("/api/service")
 async def get_service():
     lists = []
     service_all = fgt.service.get()
@@ -145,10 +146,12 @@ async def get_service():
     # print(lists)
     return lists
 
-@app.get("/policy/{vdom}")
+@app.get("/api/policy/{vdom}")
+# @app.get("/policy/{vdom}")
 async def get_apolicies(vdom: str):
     global fgt
     pol = []
+    print(vdom)
     fgt = FortigateAPI(host = host, username=user, password=password, vdom=vdom)
     print(fgt)
     policies = fgt.policy.get()
@@ -169,7 +172,7 @@ async def get_apolicies(vdom: str):
 async def read_item(item_id: int, q: Union[str, None] = None):
     return {"item_id": item_id, "q": q}
 
-@app.post("/create/{uid}")
+@app.post("/api/create/{uid}")
 async def create_policy(uid: int, data: Item):
     try:
         print(uid)
@@ -199,7 +202,7 @@ async def create_policy(uid: int, data: Item):
         print("An exception occurred:", error)
 
 
-@app.post("/update/{uid}")
+@app.post("/api/update/{uid}")
 async def update_policy(uid: int, data: Item):
     try:
         print('Update')

@@ -36,6 +36,7 @@ function AddressForm() {
   const neighbor = path && path.neighbor ? path.neighbor : '';
   const host = process.env.HOST_IP
   const port = process.env.PORT
+
   
   const updateState = (val, name, new_ip=null) => {
     if (name == 'srcaddr') {
@@ -61,7 +62,8 @@ function AddressForm() {
 
 
   const fetchData = () => {
-    fetch(`http://${host}:${port}/interfaces`)
+    // fetch(`http://${host}:${port}/interfaces`)
+    fetch(`api/interfaces`)
       .then(response => {
         return response.json()
       })
@@ -71,7 +73,8 @@ function AddressForm() {
   }
 
   const fetchAddrAll = () => {
-    fetch(`http://${host}:${port}/address`)
+    // fetch(`http://${host}:${port}/address`)
+    fetch(`api/address`)
     .then(response => {
       return response.json()
     })
@@ -81,7 +84,8 @@ function AddressForm() {
   }
 
   const fetchService = () => {
-    fetch(`http://${host}:${port}/service`)
+    // fetch(`http://${host}:${port}/service`)
+    fetch(`api/service`)
     .then(response => {
       return response.json()
     })
@@ -94,7 +98,8 @@ function AddressForm() {
     console.log(clone ? "create" : "update")
     console.log(pid)
     setOpen(true)
-    fetch(`http://${host}:${port}/${clone ? "create" : "update"}/${parseInt(pid)}`, {
+    // fetch(`http://${host}:${port}/${clone ? "create" : "update"}/${parseInt(pid)}`, {
+      fetch(`api/${clone ? "create" : "update"}/${parseInt(pid)}`, {
         method: 'POST',
         body: JSON.stringify({
           "name": name,
