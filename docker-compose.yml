@@ -9,21 +9,13 @@ services:
       - ./FGT/secrets.py:/app/secrets.py
     ports:
       - 8000:8000
-    networks:
-      - test-network
 
   react-web:
     build: ./react-app
     restart: unless-stopped
-    container_name: react-web
+    container_name: nginx-react-web
     ports:
-      - 5000:5000
-    networks:
-      - test-network
-    volumes:
-      - ./react-app/.env:/app/.env
+      - 1810:1810
     depends_on:
       - fastapi
 
-networks:
-  test-network:
